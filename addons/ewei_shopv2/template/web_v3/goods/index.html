@@ -103,7 +103,6 @@
                  {ifp 'goods.add'}
                 <a class='btn btn-sm btn-primary' href="{php echo webUrl('goods/bulk_price')}"><i class='fa fa-plus'></i> 批量修改价格</a>
                 {/if}
-
                 {if p('taobao')}
                     {ifp 'taobao'}
                         <a class='btn btn-sm btn-primary' href="{php echo webUrl('taobao')}"><i class='fa fa-plus'></i> 导入商品</a>
@@ -459,7 +458,7 @@
                 {if !empty($item['merchname']) && $item['merchid'] > 0}
                 <tr style="background: #f9f9f9">
                     <td colspan='{if $goodsfrom=='cycle'}9{else}10{/if}' style='text-align: left;border-top:none;padding:5px 0;' class='aops'>
-                    <span class="text-default" style="margin-left: 10px;">商户名称：</span><span class="text-info">{$item['merchname']}</span>
+                    <span class="text-default" style="margin-left: 10px;">商户名称{$item['id']}：</span><span class="text-info">{$item['merchname']}</span>
                     </td>
                 </tr>
                 {/if}

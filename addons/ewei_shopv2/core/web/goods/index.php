@@ -569,6 +569,31 @@ class Index_EweiShopV2Page extends WebPage {
     function add() {
         $this->post();
     }
+
+    function bulk_price()
+    {
+        global $_W, $_GPC;
+        if ($_W["ispost"]) {
+            $marketprice = $_GPC['marketprice'];
+            $productprice=$_GPC['productprice'];;
+            $costprice = $_GPC['costprice'];;
+            $items = pdo_fetchall("SELECT id,marketprice,productprice,costprice,hasoption FROM " . tablename('ewei_shop_goods') . " WHERE merchid =0 AND  status =1  AND  deleted =0 AND uniacid=" . $_W['uniacid']);
+            foreach ($items as $item) {
+                $data = [
+                    'marketprice' => $item['marketprice'] + $item['marketprice'] * $marketprice / 100,
+                    'productprice' => $item['productprice'] + $item['productprice'] * $productprice / 100,
+                    'costprice' => $item['costprice'] + $item['costprice'] * $costprice / 100,
+                ];
+                if($item['hasoption']==1){
+                    pdo_update('ewei_shop_goods_option', $data, array('id' => $item['id']));
+                }
+                pdo_update('ewei_shop_goods', $data, array('id' => $item['id']));
+            }
+
+            show_json(1, array('url' => referer()));
+        }
+        include($this->template("goods/bulk_price"));
+    }
     function edit() {
         $this->post();
     }

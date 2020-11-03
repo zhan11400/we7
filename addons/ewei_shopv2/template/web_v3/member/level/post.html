@@ -7,9 +7,9 @@
 <div class="page-content">
     <div class="page-sub-toolbar">
         <span class=''>
-            {ifp 'member.level.add'}
+           <!-- {ifp 'member.level.add'}
                 <a class="btn btn-primary btn-sm" href="{php echo webUrl('member/level/add')}">添加新会员等级</a>
-            {/if}
+            {/if}-->
         </span>
     </div>
     <form {ife 'member.level' $level}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data">
@@ -43,7 +43,7 @@
             </div>
         </div>
         {if $id!='default'}
-            <div class="form-group" {if $id=='default'}style="display: none;"{/if}>
+            <div class="form-group" {if $id=='default'}style="display: none;"{/if} style="display: none;">
             <label class="col-lg control-label">升级条件</label>
             <div class="col-sm-9 col-xs-12">
                 {ife 'shop.adv' $item}
@@ -58,7 +58,7 @@
                 {/if}
             </div>
         </div>
-            <div class="form-group" >
+            <div class="form-group" style="display: none;">
                 <label class="col-lg control-label"></label>
                 <div class="col-sm-9 col-xs-12" id="typeone" {if $level['buygoods']=='1'}style="display:none"{/if} >
                     {ife 'member.level' $level}
@@ -94,7 +94,7 @@
                         </div>
                     {/if}
                 </div>
-                <div class="col-sm-9 col-xs-12" id="typetwo" {if $level['buygoods']!='1'}style="display:none"{/if}>
+                <div class="col-sm-9 col-xs-12" id="typetwo" {if $level['buygoods']!='1'}style="display:none"{/if} >
                     <div class=' fixsingle-input-group' style="width: 800px;">
                         <div class="col-sm-9 col-xs-12">
                             <?php echo tpl_selector('goodsids',array(
@@ -116,7 +116,7 @@
             </div>
         {/if}
 
-        <div class="form-group">
+        <div class="form-group" style="display: none;">
             <label class="col-lg control-label">折扣</label>
             <div class="col-sm-9 col-xs-12">
                 {ife 'member.level' $level}
