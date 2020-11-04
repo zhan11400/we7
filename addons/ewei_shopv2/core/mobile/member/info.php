@@ -54,6 +54,37 @@ class Info_EweiShopV2Page extends MobileLoginPage
 		}
 		include $this->template();
 	}
+	public function apply_level(){
+        global $_W;
+        global $_GPC;
+        $member = m("member")->getMember($_W["openid"], true);
+        if(!$member) show_json(0,'会员失效');
+        $level = m("member")->getLevel($_W["openid"]);
+        if($level>0) 	show_json(0,'非法访问');
+        $data = pdo_fetch("SELECT * FROM " . tablename("ewei_shop_member_level_apply") . " WHERE uniacid = " . intval($_W["uniacid"]) . " AND openid = " . $_W["openid"]);
+        if($data){
+            if($data['enabled']==0){
+                show_json(0,'审核中，不能重复申请');
+            }
+            if($data['enabled']==1){
+                show_json(0,'非法访问1');
+            }
+        }
+        if(empty($_GPC['realname']) || empty($_GPC['mobile']) ||empty($_GPC['image'])){
+            show_json(0,'参数有误');
+        }
+        $m_data=[
+            'realname'=>$_GPC['realname'],
+            'mobile'=>$_GPC['mobile'],
+            'image'=>$_GPC['image'],
+        ];
+        pdo_insert('ewei_shop_member_log', $m_data);
+        $logid = pdo_insertid();
+        if(empty($logid)){
+            show_json(0,'失败');
+        }
+        show_json(1,'成功');
+    }
 	public function submit() 
 	{
 		global $_W;
